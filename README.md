@@ -1,0 +1,1 @@
+<h1>Laravel REST API</h1>
