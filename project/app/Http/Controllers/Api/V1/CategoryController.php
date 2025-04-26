@@ -12,7 +12,7 @@ class CategoryController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(): string
     {
         return response()->json([
             'message' => Category::all()
@@ -22,17 +22,20 @@ class CategoryController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreCategoryRequest $request)
+    public function store(StoreCategoryRequest $request): string
     {
-        //
+        Category::create(['title' => $request->get('title')]);
+        return response()->json([
+            'message' => 'Category created successfully'
+        ], 201);
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Category $category)
+    public function show(Category $category): Category
     {
-        //
+        return $category;
     }
 
     /**
@@ -40,7 +43,10 @@ class CategoryController extends Controller
      */
     public function update(UpdateCategoryRequest $request, Category $category)
     {
-        //
+        $category->update(['title' => $request->get('title')]);
+        return response()->json([
+            'message' => 'Category updated successfully'
+        ]);
     }
 
     /**
@@ -48,6 +54,9 @@ class CategoryController extends Controller
      */
     public function destroy(Category $category)
     {
-        //
+        $category->delete();
+        return response()->json([
+            'message' => 'Category deleted successfully'
+        ]);
     }
 }
