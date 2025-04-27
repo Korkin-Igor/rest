@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\V1;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StorePostRequest;
 use App\Http\Requests\UpdatePostRequest;
+use App\Http\Resources\Api\V1\PostResource;
 use App\Models\Post;
 
 class PostController extends Controller
@@ -14,7 +15,7 @@ class PostController extends Controller
      */
     public function index()
     {
-        return Post::all();
+        return PostResource::collection(Post::all());
     }
 
     /**
@@ -36,7 +37,7 @@ class PostController extends Controller
         if ($post->id == 4) {
             return response()->json(['message' => 'НИЗЯ!'], 403);
         }
-        return $post;
+        return new PostResource($post);
     }
 
     /**
@@ -44,7 +45,7 @@ class PostController extends Controller
      */
     public function update(UpdatePostRequest $request, Post $post)
     {
-        return $post->update($request->all());
+        return new PostResource($post->update($request->all()));
     }
 
     /**
